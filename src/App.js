@@ -14,7 +14,7 @@ function App() {
       <Router history={browser_history}>
         <Switch>
           <Route exact path='/login' component={Login} />
-          <PrivateRoute component={Products} path="/" />
+          <PrivateRoute component={Products} path="/products/:category?" />
         </Switch>
       </Router>
     </Suspense>

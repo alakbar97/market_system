@@ -15,7 +15,7 @@ function Login({ user, login }) {
     useEffect(() => {
         if (user?.userData?.token) {
             localStorage.setItem('user_token', user?.userData?.token);
-            browser_history.push('/');
+            browser_history.push('/products');
         }
     }, [user]);
 

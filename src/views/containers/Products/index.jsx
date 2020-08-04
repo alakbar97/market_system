@@ -3,11 +3,7 @@ import './style.scss';
 import Categories from '../../components/ProductComponents/Categories';
 import { connect } from 'react-redux';
 
-function Products({ products }) {
-
-    useEffect(() => {
-        console.log(products);
-    }, [products]);
+function Products({ products, match }) {
 
     const onLogout = () => {
         localStorage.removeItem('user_token');
@@ -22,7 +18,7 @@ function Products({ products }) {
                     <button onClick={onLogout} className='btn btn-danger'>Log Out</button>
                 </div>
                 <div className="col-12">
-                    <Categories />
+                    <Categories query={match.params.category} />
                 </div>
                 <div className="col-12 table-responsive">
                     <table className='table table-dark table-striped table-hover'>
