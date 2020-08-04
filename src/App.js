@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { Route, Switch, Router } from 'react-router-dom';
+import browser_history from './helpers/browser_history';
+import 'bootstrap/dist/css/bootstrap.css';
+import PrivateRoute from './PrivateRoute';
+//oimport './App.css';
+
+const Login = React.lazy(() => import('./views/containers/Login'));
+const Products = React.lazy(() => import('./views/containers/Products'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={false}>
+      <Router history={browser_history}>
+        <Switch>
+          <Route exact path='/login' component={Login} />
+          <PrivateRoute component={Products} path="/" />
+        </Switch>
+      </Router>
+    </Suspense>
   );
 }
 
