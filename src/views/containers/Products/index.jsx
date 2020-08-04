@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import './style.scss';
 import Categories from '../../components/ProductComponents/Categories';
 import { connect } from 'react-redux';
+import { addToBasket } from '../../../state/reducers/Products/actions';
+import { Link } from 'react-router-dom';
 
-function Products({ products, match }) {
+function Products({ products, basket, match, addToBasket }) {
 
     const onLogout = () => {
         localStorage.removeItem('user_token');
@@ -14,7 +16,11 @@ function Products({ products, match }) {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <button className='btn btn-warning'>Basket</button>
+                    {
+                        basket?.length ?
+                            <Link to='/basket'><button className='btn btn-warning'>Basket ({basket.length})</button></Link> :
+                            <button className='btn btn-warning'>Basket ({basket.length})</button>
+                    }
                     <button onClick={onLogout} className='btn btn-danger'>Log Out</button>
                 </div>
                 <div className="col-12">
@@ -39,7 +45,7 @@ function Products({ products, match }) {
                                     <td>{item.price}</td>
                                     <td>{item.category}</td>
                                     <td>
-                                        <button className='btn btn-light'>Add to Basket</button>
+                                        <button onClick={() => addToBasket(item.id)} className='btn btn-light'>Add to Basket</button>
                                     </td>
                                 </tr>
                             )}
@@ -52,7 +58,8 @@ function Products({ products, match }) {
 }
 
 const mapStateToProps = state => ({
-    products: state.product.products
+    products: state.product.products,
+    basket: state.product.basket
 });
 
-export default connect(mapStateToProps)(Products);
+export default connect(mapStateToProps, { addToBasket })(Products);

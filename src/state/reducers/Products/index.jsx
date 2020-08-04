@@ -1,8 +1,9 @@
-import { FILTER } from './types';
-import { product } from '../../../data/products';
+import { FILTER, ADD_BASKER, PROCEED } from './types';
+import { product, addToBasket, submit } from '../../../data/products';
 
 export const productsState = {
-    products: product
+    products: product,
+    basket: []
 };
 
 export default (state = productsState, { type, payload }) => {
@@ -17,6 +18,29 @@ export default (state = productsState, { type, payload }) => {
                 ...state,
                 products: filteredProducts
             }
+
+        case ADD_BASKER:
+            const arrayItems = addToBasket(payload.id);
+            if (arrayItems && !state.basket.includes(arrayItems))
+                return {
+                    ...state,
+                    basket: [...state.basket, arrayItems]
+                }
+            else {
+                alert('it is already added to basket');
+                return state;
+            }
+
+        case PROCEED:
+            const newProductArray = submit(payload.array);
+            if (newProductArray.length)
+                return {
+                    ...state,
+                    basket: [],
+                    products: newProductArray
+                }
+            else
+                return state;
 
         default:
             return state;

@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute';
 
 const Login = React.lazy(() => import('./views/containers/Login'));
 const Products = React.lazy(() => import('./views/containers/Products'));
+const Basket=React.lazy(()=>import('./views/containers/Basket'));
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
       <Router history={browser_history}>
         <Switch>
           <Route exact path='/login' component={Login} />
-          <PrivateRoute component={Products} path="/products/:category?" />
+          <PrivateRoute exact component={Basket} path="/basket"/>
+          <PrivateRoute exact component={Products} path="/products/:category?" />
+          <PrivateRoute exact component={Products} path="/" />
         </Switch>
       </Router>
     </Suspense>
